@@ -1,5 +1,5 @@
 import { Matcher, MatcherConfig } from "./matcher";
-import { alphaNumericCharsStr, alphaNumericAndMarksCharsStr, getDomainNameStr } from "../regex-lib";
+import { alphaNumericCharsStr, alphaNumericAndMarksCharsStr, getDomainNameStr, getDomainNameStrWithUnderscore } from "../regex-lib";
 import { StripPrefixConfigObj, UrlMatchTypeOptions } from "../autolinker";
 import { tldRegex } from "./tld-regex";
 import { UrlMatch } from "../match/url-match";
@@ -82,7 +82,7 @@ export class UrlMatcher extends Matcher {
 			'(?:', // parens to cover match for scheme (optional), and domain
 				'(',  // *** Capturing group $1, for a scheme-prefixed url (ex: http://google.com)
 					schemeRegex.source,
-					getDomainNameStr( 2 ),
+					getDomainNameStrWithUnderscore( 2 ),
 				')',
 
 				'|',
