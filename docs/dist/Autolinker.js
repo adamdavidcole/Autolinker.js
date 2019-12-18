@@ -1780,8 +1780,12 @@
     var ipStr = '(?:[' + decimalNumbersStr + ']{1,3}\\.){3}[' + decimalNumbersStr + ']{1,3}';
     // Protected domain label which do not allow "-" character on the beginning and the end of a single label
     var domainLabelStr = '[' + alphaNumericAndMarksCharsStr + '](?:[' + alphaNumericAndMarksCharsStr + '\\-]{0,61}[' + alphaNumericAndMarksCharsStr + '])?';
+    var domainLabelStrWithUnderscore = '[' + alphaNumericAndMarksCharsStr + '_](?:[' + alphaNumericAndMarksCharsStr + '\\-_]{0,61}[' + alphaNumericAndMarksCharsStr + '_])?';
     var getDomainLabelStr = function (group) {
         return '(?=(' + domainLabelStr + '))\\' + group;
+    };
+    var getDomainLabelStrWithUnderscore = function (group) {
+        return '(?=(' + domainLabelStrWithUnderscore + '))\\' + group;
     };
     /**
      * A function to match domain names of a URL or email address.
@@ -1789,6 +1793,9 @@
      */
     var getDomainNameStr = function (group) {
         return '(?:' + getDomainLabelStr(group) + '(?:\\.' + getDomainLabelStr(group + 1) + '){0,126}|' + ipStr + ')';
+    };
+    var getDomainNameStrWithUnderscore = function (group) {
+        return '(?:' + getDomainLabelStrWithUnderscore(group) + '(?:\\.' + getDomainLabelStr(group + 1) + '){0,126}|' + ipStr + ')';
     };
     /**
      * A regular expression that is simply the character class of the characters
@@ -2322,7 +2329,7 @@
                     '(?:',
                     '(',
                     schemeRegex.source,
-                    getDomainNameStr(2),
+                    getDomainNameStrWithUnderscore(2),
                     ')',
                     '|',
                     '(',

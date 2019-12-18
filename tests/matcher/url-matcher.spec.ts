@@ -90,6 +90,39 @@ describe( "Autolinker.matcher.Url", function() {
 			expect( matches.length ).toBe( 0 );
 		});
 
+		it( 'should match subdomain with underscores', function() {
+			let matches = matcher.parseMatches( 'http://_foo_bar_.example.com' );
+
+			expect( matches.length ).toBe( 1 );
+			MatchChecker.expectUrlMatch( matches[ 0 ], 'http://_foo_bar_.example.com', 0 );
+		});
+
+		it( 'should not match tld with trailing underscore', function() {
+			let matches = matcher.parseMatches( 'http://example.com_' );
+
+			expect( matches.length ).toBe( 1 );
+			MatchChecker.expectUrlMatch( matches[ 0 ], 'http://example.com', 0 );
+		});
+
+		it( 'should not match tld with leading underscore', function() {
+			let matches = matcher.parseMatches( 'http://example._com' );
+
+			expect( matches.length ).toBe( 1 );
+			MatchChecker.expectUrlMatch( matches[ 0 ], 'http://example', 0 );
+		});
+
+		it( 'should not include underscore in scheme-less URL', function() {
+			let matches = matcher.parseMatches( '_example.com' );
+			expect( matches.length ).toBe( 1 );
+			MatchChecker.expectUrlMatch( matches[ 0 ], 'http://example.com', 1 );
+		});
+
+		it( 'should not include underscore in www URL', function() {
+			let matches = matcher.parseMatches( 'www._example.com' );
+			expect( matches.length ).toBe( 1 );
+			MatchChecker.expectUrlMatch( matches[ 0 ], 'http://example.com', 5 );
+		});
+
 		it( 'should match the entire URL with a check character', function() {
 			let matches = matcher.parseMatches( 'https://gitlab.example.com/search?utf8=✓&search=mysearch&group_id=&project_id=42&search_code=true&repository_ref=master' );
 

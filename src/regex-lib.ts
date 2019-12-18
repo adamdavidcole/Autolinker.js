@@ -156,9 +156,14 @@ const ipStr = '(?:[' + decimalNumbersStr + ']{1,3}\\.){3}[' + decimalNumbersStr 
 
 // Protected domain label which do not allow "-" character on the beginning and the end of a single label
 const domainLabelStr = '[' + alphaNumericAndMarksCharsStr + '](?:[' + alphaNumericAndMarksCharsStr + '\\-]{0,61}[' + alphaNumericAndMarksCharsStr + '])?';
+const domainLabelStrWithUnderscore = '[' + alphaNumericAndMarksCharsStr + '_](?:[' + alphaNumericAndMarksCharsStr + '\\-_]{0,61}[' + alphaNumericAndMarksCharsStr + '_])?';
 
 const getDomainLabelStr = (group: number) => {
 	return '(?=(' + domainLabelStr + '))\\' + group;
+};
+
+const getDomainLabelStrWithUnderscore = (group: number) => {
+	return '(?=(' + domainLabelStrWithUnderscore + '))\\' + group;
 };
 
 /**
@@ -167,6 +172,10 @@ const getDomainLabelStr = (group: number) => {
  */
 export const getDomainNameStr = ( group: number ) => {
 	return '(?:' + getDomainLabelStr( group ) + '(?:\\.' + getDomainLabelStr( group + 1 ) + '){0,126}|' + ipStr + ')';
+};
+
+export const getDomainNameStrWithUnderscore = ( group: number ) => {
+	return '(?:' + getDomainLabelStrWithUnderscore( group ) + '(?:\\.' + getDomainLabelStr( group + 1 ) + '){0,126}|' + ipStr + ')';
 };
 
 
