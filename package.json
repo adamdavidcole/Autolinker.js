@@ -5,9 +5,6 @@
   "main": "./dist/commonjs/index.js",
   "typings": "./dist/commonjs/index.d.ts",
   "module": "./dist/es2015/index.js",
-  "files": [
-    "./dist"
-  ],
   "directories": {
     "test": "tests"
   },
