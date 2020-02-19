@@ -1,8 +1,8 @@
 /*!
  * Autolinker.js
- * 3.11.1
+ * 3.12.0
  *
- * Copyright(c) 2019 Gregory Jacobs <greg@greg-jacobs.com>
+ * Copyright(c) 2020 Gregory Jacobs <greg@greg-jacobs.com>
  * MIT License
  *
  * https://github.com/gregjacobs/Autolinker.js
@@ -2324,7 +2324,7 @@
                 wwwRegex = /(?:www\.)/, // starting with 'www.'
                 // Allow optional path, query string, and hash anchor, not ending in the following characters: "?!:,.;"
                 // http://blog.codinghorror.com/the-problem-with-urls/
-                urlSuffixRegex = new RegExp('[/?#](?:[' + alphaNumericAndMarksCharsStr + '\\-+&@#/%=~_()|\'$*\\[\\]?!:,.;\u2713]*[' + alphaNumericAndMarksCharsStr + '\\-+&@#/%=~_()|\'$*\\[\\]\u2713])?');
+                urlSuffixRegex = new RegExp('[/?#](?:[' + alphaNumericAndMarksCharsStr + '\\-+&@#/%=~_()|\'$*\\[\\]{}?!:,.;^\u2713]*[' + alphaNumericAndMarksCharsStr + '\\-+&@#/%=~_()|\'$*\\[\\]{}\u2713])?');
                 return new RegExp([
                     '(?:',
                     '(',
@@ -2447,8 +2447,8 @@
             return matches;
         };
         /**
-         * Determines if a match found has an unmatched closing parenthesis or
-         * square bracket. If so, the parenthesis or square bracket will be removed
+         * Determines if a match found has an unmatched closing parenthesis,
+         * square bracket or curly bracket. If so, the symbol will be removed
          * from the match itself, and appended after the generated anchor tag.
          *
          * A match may have an extra closing parenthesis at the end of the match
@@ -2481,12 +2481,15 @@
             else if (endChar === ']') {
                 startChar = '[';
             }
+            else if (endChar === '}') {
+                startChar = '{';
+            }
             else {
                 return false; // not a close parenthesis or square bracket
             }
             // Find if there are the same number of open braces as close braces in
             // the URL string, minus the last character (which we have already 
-            // determined to be either ')' or ']'
+            // determined to be either ')', ']' or '}'
             var numOpenBraces = 0;
             for (var i = 0, len = matchStr.length - 1; i < len; i++) {
                 var char = matchStr.charAt(i);
@@ -4175,7 +4178,7 @@
          *
          * Ex: 0.25.1
          */
-        Autolinker.version = '3.11.1';
+        Autolinker.version = '3.12.0';
         /**
          * For backwards compatibility with Autolinker 1.x, the AnchorTagBuilder
          * class is provided as a static on the Autolinker class.
