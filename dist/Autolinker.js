@@ -1,6 +1,6 @@
 /*!
  * Autolinker.js
- * 3.11.0
+ * 3.12.0
  *
  * Copyright(c) 2020 Gregory Jacobs <greg@greg-jacobs.com>
  * MIT License
@@ -4178,7 +4178,7 @@
          *
          * Ex: 0.25.1
          */
-        Autolinker.version = '3.11.0';
+        Autolinker.version = '3.12.0';
         /**
          * For backwards compatibility with Autolinker 1.x, the AnchorTagBuilder
          * class is provided as a static on the Autolinker class.
